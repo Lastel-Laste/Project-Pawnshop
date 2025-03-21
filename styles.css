@@ -1,0 +1,417 @@
+html,
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 연노랑 배경과 폴카 도트 패턴 */
+body {
+    background-color: #f3e19f;
+    /* 연노랑 배경색 */
+    /* 도트 패턴 */
+    background-image:
+        radial-gradient(circle, #fff3c7 5%, transparent 7%),
+        radial-gradient(circle, #e0c272 5%, transparent 7%);
+    background-size: 6vw 6vw;
+    /* 도트 크기 및 간격 */
+    background-position: 0vw 0vw, 3vw 3vw;
+    animation: movePolkaDots 60s linear infinite;
+    /* 천천히 움직이는 애니메이션 */
+}
+
+/* 135도 좌상향으로 움직임 (좌상향은 x와 y 방향 모두 음수로) */
+@keyframes movePolkaDots {
+    from {
+        background-position: 0 0, 3vw 3vw;
+    }
+
+    to {
+        background-position: -100vw -100vw, -97vw -97vw;
+    }
+}
+
+/* wrapper: 전체 화면을 기준으로 설정하지만, 창이 좁은 경우에는 전체 너비 사용 */
+#wrapper {
+    perspective: 100%;
+    position: relative;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+/* 창의 가로 길이가 충분히 넓은 경우: wrapper는 전체 화면의 가운데 절반 영역 사용 */
+@media (min-width: 960px) {
+    #wrapper {
+        width: 50vw;
+        margin-left: calc((100vw - 50vw) / 2 - 11vw);
+        margin-right: calc((100vw - 50vw) / 2 + 11vw);
+    }
+}
+
+/* 창의 가로 길이가 960px 이하인 경우: wrapper가 현재 창의 전체 너비를 사용 */
+@media (max-width: 960px) {
+    #wrapper {
+        width: 100vw;
+    }
+}
+
+/* 선반 컨테이너: 원하는 위치/크기로 배치 */
+#inventory-container {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 96%;
+    /* 브라우저 크기에 따라 스케일 */
+    height: 60%;
+    /* 브라우저 크기에 따라 스케일 */
+    overflow: hidden;
+    /* 이미지가 벗어나지 않도록 */
+}
+
+/* 선반 이미지 */
+#inventory-shelf {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    /* 원본 비율 무시, 컨테이너에 꽉 채움 */
+}
+
+/* 그리드 오버레이 */
+#grid-overlay {
+    position: absolute;
+    top: 20.6%;
+    left: 5.0%;
+    width: 89.6%;
+    height: 73.0%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    /* 가로 8칸 */
+    grid-template-rows: repeat(4, 1fr);
+    /* 세로 4칸 */
+    column-gap: 1.7%;
+    /* 또는 원하는 값으로 설정 */
+    row-gap: 3%;
+}
+
+/* 아이템 박스 스타일 */
+.item-box {
+    position: relative;
+    /* 내부 아이템 배치 기준 */
+    display: flex;
+    justify-content: center;
+    /* 중앙 정렬 */
+    align-items: flex-end;
+    /* 하단 정렬 */
+    overflow: hidden;
+    /* 아이템이 칸을 벗어나지 않도록 */
+}
+
+/* 인벤토리 아이템 (아이템 이미지) */
+.inventory-item {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    position: absolute;
+    bottom: 0;
+    /* 바닥에 맞추기 */
+    left: 50%;
+    transform: translateX(-50%);
+    /* 가로 중앙 정렬 */
+}
+
+.highlight {
+    position: relative;
+    /* 가상요소 위치 기준 */
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20%;
+    /* 둥근 모서리 적용 */
+}
+
+.highlight::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    border-radius: 20%;
+    /* 기존 dashed border 4개와 추가 도트 4개를 모두 background-image로 설정 */
+    background-image:
+        /* 기존 dashed border */
+        linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+        linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+        /* 4개의 white square dot */
+        linear-gradient(white, white),
+        linear-gradient(white, white),
+        linear-gradient(white, white),
+        linear-gradient(white, white);
+    /* 각 레이어의 사이즈: 기존 dashed border와 도트 크기 */
+    background-size: 8% 4%, 8% 4%, 4% 8%, 4% 8%, 4% 4%, 4% 4%, 4% 4%, 4% 4%;
+    /* 기존 dashed border는 반복, 도트는 반복하지 않음 */
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y, no-repeat, no-repeat, no-repeat, no-repeat;
+    /* 위치: dashed border는 기존 설정대로, 도트는 각 모서리에 배치 */
+    background-position:
+        top left, bottom right, bottom left, top right,
+        6% 6%, 94% 6%, 6% 94%, 94% 94%;
+
+    animation: march 0.3s linear infinite;
+    filter: drop-shadow(0 0 1px #ffd700) drop-shadow(0 0 3px #ffd700);
+}
+
+@keyframes march {
+
+    0%,
+    100% {
+        background-image:
+            /* dashed border 4개 */
+            linear-gradient(90deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%),
+            linear-gradient(0deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%),
+            linear-gradient(0deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%),
+            /* white dot 4개는 그대로 */
+            linear-gradient(white, white),
+            linear-gradient(white, white),
+            linear-gradient(white, white),
+            linear-gradient(white, white);
+    }
+
+    50% {
+        background-image:
+            /* dashed border 4개 (반전) */
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+            linear-gradient(90deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+            linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+            linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+            /* white dot 4개 */
+            linear-gradient(white, white),
+            linear-gradient(white, white),
+            linear-gradient(white, white),
+            linear-gradient(white, white);
+    }
+}
+
+/* 기존 #character-container 대신 뷰포트를 기준으로 배치 */
+#character-container {
+    position: fixed;
+    /* 뷰포트 기준 */
+    bottom: 0;
+    left: 0;
+    height: 70%;
+    width: auto;
+    overflow: hidden;
+}
+
+/* 캐릭터 이미지: flip 애니메이션만 적용 */
+#character {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease, opacity 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+/*
+@media (min-width: 960px) {
+    #character {
+        left: -30%;
+    }
+}
+
+@media (max-width: 960px) {
+    #character {
+        left: 0%;
+    }
+}
+*/
+
+/* 좌우 뒤집힘 시 3D 회전 효과 */
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* 카운터 */
+#counter {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 30%;
+}
+
+/* 아이템 패널 (크기 고정) */
+#item-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 500px;
+    /* 고정된 크기 */
+    height: 500px;
+    /* 고정된 크기 */
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+/* 화면 너비가 960px 이하일 때 아이템 패널 숨김 */
+@media (max-width: 960px) {
+    #item-panel {
+        display: none;
+    }
+}
+
+/* 아이템 상세 정보 */
+.item-details {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* 개별 오버레이 박스 */
+.item-overlay {
+    width: 90%;
+    height: 40px;
+    /* 고정 높이 */
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+/* 이미지 오버레이 */
+.item-image-overlay {
+    width: 400px;
+    /* 고정된 크기 */
+    height: 200px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 5px;
+    /* 이미지 아래 간격 조정 */
+}
+
+/* 아이템 이미지 (고정 크기) */
+.item-detail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 아이템 이름 */
+.item-name-overlay {
+    font-size: 18px;
+    /* px 단위로 고정 */
+    font-weight: bold;
+}
+
+/* 가격 & 등급 */
+.item-price-overlay,
+.item-rarity-overlay {
+    font-size: 16px;
+}
+
+/* 설명 오버레이 */
+.item-description-overlay {
+    font-size: 14px;
+    line-height: 1.4;
+    height: 80px;
+    /* 고정 높이 */
+    overflow-y: auto;
+    word-break: keep-all;
+}
+
+/* 설명이 너무 길면 작은 폰트 적용 */
+.small-text {
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+/* 한줄평 오버레이 */
+.item-comment-overlay {
+    width: 90%;
+    height: 40px;
+    /* 고정 높이 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(255, 223, 174, 0.5);
+    /* 약간 다른 색감 적용 */
+    border-radius: 10px;
+    font-style: italic;
+    /* 이탤릭체로 구분 */
+    font-size: 13px;
+    padding: 5px;
+    margin-top: 3px;
+    /* 설명과 간격 */
+    overflow: hidden;
+    word-break: keep-all;
+}
+
+#dialogue-bar {
+    position: fixed;
+    bottom: 20px; /* 약간 위로 띄워서 여백 확보 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px; /* 최대 600px 폭 */
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 999;
+    transition: opacity 0.3s ease;
+    text-align: left;
+    line-height: 1.5;
+    border-radius: 5px;
+}
+
+#dialogue-click-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: transparent;
+    cursor: pointer;
+}
+
+#dialogue-click-overlay.hidden {
+    display: none;
+}
+
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#dialogue-bar:not(.hidden) {
+    opacity: 1;
+}
+
+#dialogue-click-overlay.hidden {
+    display: none;
+}
+  

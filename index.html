@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <title>전당포 레이아웃</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+
+  <div id="wrapper">
+    <!-- 전당포 선반 -->
+    <div id="inventory-container">
+      <img src="./images/background/inventory.png" alt="Inventory Shelf" id="inventory-shelf" />
+      <div id="grid-overlay"></div>
+    </div>
+
+    <!-- index.html 내 캐릭터 관련 부분 -->
+    <div id="character-container">
+      <img alt="Owner" id="character" />
+    </div>
+
+    <!-- 카운터 -->
+    <img src="./images/background/counter.png" alt="Counter" id="counter" />
+    <div id="item-panel"></div>
+  </div>
+
+  <div id="dialogue-bar" class="hidden"></div>
+  <div id="dialogue-click-overlay" class="hidden"></div>
+
+  
+  <script src="./src/character_base64.js"></script>
+  <script src="./src/item.js"></script>
+  <script src="./src/inventory.js"></script>
+  <script src="./src/character.js"></script>
+  <script src="./src/dialogue.js"></script>
+  <script src="./src/game.js"></script>
+
+</body>
+
+</html>
