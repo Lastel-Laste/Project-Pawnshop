@@ -28,9 +28,7 @@ body {
     background-position: 0vw 0vw, 3vw 3vw;
     animation: movePolkaDots 60s linear infinite;
 }
-*/
 
-/* 135도 좌상향으로 움직임 (좌상향은 x와 y 방향 모두 음수로) */
 @keyframes movePolkaDots {
     from {
         background-position: 0 0, 3vw 3vw;
@@ -40,6 +38,7 @@ body {
         background-position: -100vw -100vw, -97vw -97vw;
     }
 }
+*/
 
 /* wrapper: 전체 화면을 기준으로 설정하지만, 창이 좁은 경우에는 전체 너비 사용 */
 #wrapper {
