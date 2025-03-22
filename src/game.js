@@ -191,7 +191,7 @@ let hasClickedOnce = false;
 const remainingEvents = [
     "Click2", "Click3", "Click4",
     "Click5", "Click6", "Click7",
-    "Click8", "Click9", "Click10"
+    "Click8", "Click9"
 ];
 
 document.getElementById("character").addEventListener("click", function () {
