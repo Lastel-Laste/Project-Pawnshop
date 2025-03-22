@@ -8,20 +8,27 @@ body {
     height: 100%;
 }
 
-/* 연노랑 배경과 폴카 도트 패턴 */
+body {
+    background-image:
+        linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), /* 아래쪽 어둡게 */
+        url("./images/background/wall.png");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: bottom left;
+    background-color: #000;
+}
+
+/* 폴카도트 패턴
 body {
     background-color: #f3e19f;
-    /* 연노랑 배경색 */
-    /* 도트 패턴 */
     background-image:
         radial-gradient(circle, #fff3c7 5%, transparent 7%),
         radial-gradient(circle, #e0c272 5%, transparent 7%);
     background-size: 6vw 6vw;
-    /* 도트 크기 및 간격 */
     background-position: 0vw 0vw, 3vw 3vw;
     animation: movePolkaDots 60s linear infinite;
-    /* 천천히 움직이는 애니메이션 */
 }
+*/
 
 /* 135도 좌상향으로 움직임 (좌상향은 x와 y 방향 모두 음수로) */
 @keyframes movePolkaDots {
