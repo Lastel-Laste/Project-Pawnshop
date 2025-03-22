@@ -47,7 +47,7 @@ const dialogues = {
         { text: "전당포를 폐기물 처리장처럼 쓰려는 진상도 있어.", expression: "shame", flip: false},
         { text: "다시 찾아올 생각 없이 물건 던지고 돈내놔! 하는 사람들이야.", expression: "greet", flip: false},
         { text: "본래 가치보다 높게 부르기 때문에, 손해보는 경우가 많아.", expression: "hate", flip: false},
-        { text: "잘 판단해야해?", expression: "anxious", flip: false}
+        { text: "그런 손님은 거절해야 해.", expression: "anxious", flip: false}
     ]
 };
 
