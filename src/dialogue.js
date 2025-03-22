@@ -48,13 +48,7 @@ const dialogues = {
         { text: "다시 찾아올 생각 없이 물건 던지고 돈내놔! 하는 사람들이야.", expression: "greet", flip: false},
         { text: "본래 가치보다 높게 부르기 때문에, 손해보는 경우가 많아.", expression: "hate", flip: false},
         { text: "잘 판단해야해?", expression: "anxious", flip: false}
-    ],
-    Click10: [
-        { text: "'꼬르륵.'", expression: "idle", flip: false},
-        { text: "윽, 배고파.", expression: "shame", flip: false},
-        { text: "...컵라면이라도 먹을까?", expression: "hate", flip: false},
-        { text: "아냐, 퇴근하고 밥을 먹자.", expression: "anxious", flip: false}
-    ],
+    ]
 };
 
 function getDialogue(eventName) {
